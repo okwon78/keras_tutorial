@@ -1,3 +1,5 @@
+import sys
+
 import keras
 from keras import Sequential
 from keras.layers import Dense, Activation
@@ -10,6 +12,7 @@ from PreprocessingData import training_data, testing_data
 
 print(tf.__version__)
 print(keras.__version__)
+print (sys.version)
 
 try:
     model = load_model('my_model.h5')
@@ -21,9 +24,9 @@ except OSError:
     model = Sequential([
         Dense(16, input_shape=(1,)),
         Activation('relu'),
-        Dense(32),
+        Dense(32, name='last'),
         Activation('relu'),
-        Dense(2),
+        Dense(2,),
         Activation('softmax'),
     ])
 
@@ -54,7 +57,7 @@ one_hot_labels = keras.utils.to_categorical(test_label, num_classes=2)
 
 score = model.evaluate(test_samples, one_hot_labels, batch_size=10)
 
-print('\n', f'{model.metrics_names[0]}: {score[0]}')
+print('\n', f"{model.metrics_names[0]}: {score[0]}")
 print(f'{model.metrics_names[1]}: {score[1]}', '\n')
 
 # predictions = model.predict(train_samples)
@@ -69,4 +72,4 @@ for index, val in enumerate(predictions) :
     else:
         Failure += 1
 
-print(f"Success: {Success}, Failure {Failure}")
+# print(f"Success: {Success}, Failure {Failure}")
